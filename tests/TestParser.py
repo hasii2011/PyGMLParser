@@ -19,7 +19,7 @@ from org.hasii.pygmlparser.Parser import Parser
 from org.hasii.pygmlparser.Parser import Graph
 
 
-class TestGMLParser(TestBase):
+class TestParser(TestBase):
 
     EXPECTED_NODE_COUNT: int = 5
     EXPECTED_EDGE_COUNT: int = 4
@@ -43,22 +43,22 @@ class TestGMLParser(TestBase):
     @classmethod
     def setUpClass(cls):
         TestBase.setUpLogging()
-        TestGMLParser.clsLogger = getLogger(__name__)
+        TestParser.clsLogger = getLogger(__name__)
 
     def setUp(self):
-        self.logger: Logger = TestGMLParser.clsLogger
+        self.logger: Logger = TestParser.clsLogger
         self.parser: Parser = Parser()
 
         self._monolithTestFilePath: str = self._findMonolithicTestFile()
 
     @classmethod
     def _findMonolithicTestFile(cls) -> str:
-        upDir = f'tests{osSep}{TestGMLParser.RELATIVE_TEST_FILE_DIR}'
+        upDir = f'tests{osSep}{TestParser.RELATIVE_TEST_FILE_DIR}'
         if osPath.isfile(upDir):
             return upDir
 
-        if osPath.isfile(TestGMLParser.RELATIVE_TEST_FILE_DIR):
-            return TestGMLParser.RELATIVE_TEST_FILE_DIR
+        if osPath.isfile(TestParser.RELATIVE_TEST_FILE_DIR):
+            return TestParser.RELATIVE_TEST_FILE_DIR
         else:
             osChdir("../")
             return cls.findLoggingConfig()
@@ -77,25 +77,25 @@ class TestGMLParser(TestBase):
         graph: Graph = self.parser.graph
 
         actualNodeCount: int = len(graph.graphNodes)
-        self.assertEqual(TestGMLParser.EXPECTED_NODE_COUNT, actualNodeCount, 'Mismatch on parsed nodes')
+        self.assertEqual(TestParser.EXPECTED_NODE_COUNT, actualNodeCount, 'Mismatch on parsed nodes')
 
         actualEdgeCount: int = len(graph.graphEdges)
-        self.assertEqual(TestGMLParser.EXPECTED_EDGE_COUNT, actualEdgeCount, 'Mismatch on parsed edges')
+        self.assertEqual(TestParser.EXPECTED_EDGE_COUNT, actualEdgeCount, 'Mismatch on parsed edges')
 
         edge0: Edge = graph.graphEdges[0]
         actualEdge0SourceId: int = edge0.source
         actualEdge0TargetId: int = edge0.target
 
-        self.assertEqual(TestGMLParser.EXPECTED_EDGE_0_SOURCE_ID, actualEdge0SourceId, 'Source structure might have changed')
-        self.assertEqual(TestGMLParser.EXPECTED_EDGE_0_TARGET_ID, actualEdge0TargetId, 'Target structure might have changed')
+        self.assertEqual(TestParser.EXPECTED_EDGE_0_SOURCE_ID, actualEdge0SourceId, 'Source structure might have changed')
+        self.assertEqual(TestParser.EXPECTED_EDGE_0_TARGET_ID, actualEdge0TargetId, 'Target structure might have changed')
 
-        node2:         Node         = graph.graphNodes[TestGMLParser.NODE_2_ID]
+        node2:         Node         = graph.graphNodes[TestParser.NODE_2_ID]
         node2Graphics: NodeGraphics = node2.graphics
         actualX: int = node2Graphics.x
         actualY: int = node2Graphics.y
 
-        self.assertEqual(TestGMLParser.EXPECTED_NODE_2_X, actualX, 'X position not correctly parsed')
-        self.assertEqual(TestGMLParser.EXPECTED_NODE_2_Y, actualY, 'Y position not correctly parsed')
+        self.assertEqual(TestParser.EXPECTED_NODE_2_X, actualX, 'X position not correctly parsed')
+        self.assertEqual(TestParser.EXPECTED_NODE_2_Y, actualY, 'Y position not correctly parsed')
 
         self.logger.debug(f'graph: {graph}')
 
@@ -106,7 +106,7 @@ def suite() -> TestSuite:
 
     testSuite: TestSuite = TestSuite()
     # noinspection PyUnresolvedReferences
-    testSuite.addTest(unittest.makeSuite(TestGMLParser))
+    testSuite.addTest(unittest.makeSuite(TestParser))
 
     return testSuite
 

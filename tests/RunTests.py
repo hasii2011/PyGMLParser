@@ -3,7 +3,7 @@ import unittest
 from unittest import TestSuite
 from unittest import TestLoader
 
-from tests.TestGMLParser import TestGMLParser
+from tests.TestParser import TestParser
 
 
 def main():
@@ -11,7 +11,7 @@ def main():
     testLoader: TestLoader = unittest.TestLoader()
     suite: TestSuite = unittest.TestSuite()
 
-    suite.addTest(testLoader.loadTestsFromTestCase(TestGMLParser))
+    suite.addTest(testLoader.loadTestsFromTestCase(TestParser))
 
     # initialize a runner, pass it our suite and run it
     runner = unittest.TextTestRunner()
