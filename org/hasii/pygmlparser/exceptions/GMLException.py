@@ -1,0 +1,3 @@
+
+class GMLException(Exception):
+    pass
