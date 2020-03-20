@@ -18,7 +18,7 @@ from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 class Parser:
 
-    AttrObjectType = NewType('AttrObjectType', Union[Node, Edge, NodeGraphics, EdgeGraphics])
+    AttrObjectType = NewType('AttrObjectType', Union[Node, Edge, NodeGraphics, EdgeGraphics, Point])
     LineType       = NewType('LineType', Tuple[Point, ...])
 
     GRAPHICS_TOKEN: str = 'graphics'
@@ -29,14 +29,19 @@ class Parser:
     POINT_DEFINITION_TOKEN: str = 'point'
 
     def __init__(self):
-        self.logger: Logger = getLogger('Gml')
-        # raw GML data (raw string split on whitespace)
+        self.logger: Logger = getLogger(__name__)
         self._raw = []
-        self._i = 0  # position (index) in self._raw
+        """
+        raw GML data (raw string split on whitespace)
+        """
+        self._i = 0
+        """
+        position (index) in self._raw
+        """
 
         self.graph = None
 
-    def loadGML(self, path):
+    def loadGML(self, path: str):
         with open(path) as infile:
             # NOTE: the split will destroy any spaces in string attributes
             self._raw = infile.read().strip().split()
@@ -46,11 +51,11 @@ class Parser:
 
     def parse(self):
         if len(self._raw) == 0:
-            raise GMLParseException('not loaded (must call load_gml before parse)')
+            raise GMLParseException('not loaded you must call load_gml before parse')
 
         self._parseGraph()
 
-    def _currentToken(self):
+    def _currentToken(self) -> str:
         if self._i >= len(self._raw):
             raise GMLParseException(f'[pos {self._i}] unexpected end of file')
 
@@ -62,7 +67,7 @@ class Parser:
     def _parseGraph(self):
         self._parseOpenWithKeyword('graph')
 
-        while self._currentToken() != ']':
+        while self._currentToken() != Parser.END_TOKEN:
             x = self._currentToken()
             self.logger.info(f'x: {x}')
             if x == 'node':
@@ -78,7 +83,7 @@ class Parser:
 
         node = Node()
 
-        while self._currentToken() != ']':
+        while self._currentToken() != Parser.END_TOKEN:
             try:
                 current: str = self._currentToken()
                 if current == Parser.GRAPHICS_TOKEN:
@@ -110,7 +115,7 @@ class Parser:
 
         edge: Edge = Edge()
 
-        while self._currentToken() != ']':
+        while self._currentToken() != Parser.END_TOKEN:
             current: str = self._currentToken()
             if current == Parser.GRAPHICS_TOKEN:
                 self._parseEdgeGraphics(edge)
@@ -148,7 +153,7 @@ class Parser:
         self._parseOpenWithKeyword(Parser.GRAPHICS_TOKEN)
         graphics: NodeGraphics = NodeGraphics()
 
-        while self._currentToken() != ']':
+        while self._currentToken() != Parser.END_TOKEN:
             self._parseAttribute(graphics)
 
         self._increment()
@@ -252,11 +257,11 @@ class Parser:
 
         return obj
 
-    def _parseOpenWithKeyword(self, kw):
+    def _parseOpenWithKeyword(self, kw: str):
         if self._currentToken() != kw:
             raise GMLParseException(f'[pos {self._i}] expected `{kw}` keyword, found: {self._currentToken()}')
         self._increment()
 
-        if self._currentToken() != '[':
+        if self._currentToken() != Parser.START_TOKEN:
             raise GMLParseException(f'[pos {self._i}] expected opening [, found: {self._currentToken()}')
         self._increment()
