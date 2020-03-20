@@ -17,9 +17,9 @@ class TestBase(TestCase):
     @classmethod
     def setUpLogging(cls):
         """"""
-        cls.findLoggingConfig()
+        loggingConfigFilename: str = cls.findLoggingConfig()
 
-        with open(JSON_LOGGING_CONFIG_FILENAME, 'r') as loggingConfigurationFile:
+        with open(loggingConfigFilename, 'r') as loggingConfigurationFile:
             configurationDictionary = json.load(loggingConfigurationFile)
 
         logging.config.dictConfig(configurationDictionary)
@@ -27,10 +27,16 @@ class TestBase(TestCase):
         logging.logThreads = False
 
     @classmethod
-    def findLoggingConfig(cls):
+    def findLoggingConfig(cls) -> str:
         """"""
+        from os import getcwd
+
+        upDir = f'tests/{JSON_LOGGING_CONFIG_FILENAME}'
+        if os.path.isfile(upDir):
+            return upDir
+
         if os.path.isfile(JSON_LOGGING_CONFIG_FILENAME):
-            return
+            return JSON_LOGGING_CONFIG_FILENAME
         else:
             os.chdir("../")
-            cls.findLoggingConfig()
+            return cls.findLoggingConfig()

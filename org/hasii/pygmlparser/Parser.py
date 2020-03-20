@@ -1,4 +1,5 @@
 
+from typing import cast
 from typing import List
 from typing import NewType
 from typing import Tuple
@@ -21,33 +22,44 @@ class Parser:
     AttrObjectType = NewType('AttrObjectType', Union[Node, Edge, NodeGraphics, EdgeGraphics, Point])
     LineType       = NewType('LineType', Tuple[Point, ...])
 
+    GRAPH_TOKEN: str = 'graph'
+
+    ID_TOKEN:   str = 'id'
+    NODE_TOKEN: str = 'node'
+    EDGE_TOKEN: str = 'edge'
+
+    SOURCE_ID_TOKEN: str = 'source'
+    TARGET_ID_TOKEN: str = 'target'
+
     GRAPHICS_TOKEN: str = 'graphics'
     START_TOKEN:    str = '['
     END_TOKEN:      str = ']'
+
+    QUOTE_TOKEN: str = '"'
 
     LINE_DEFINITION_TOKEN:  str = 'Line'
     POINT_DEFINITION_TOKEN: str = 'point'
 
     def __init__(self):
-        self.logger: Logger = getLogger(__name__)
-        self._raw = []
+        self.logger: Logger    = getLogger(__name__)
+        self._raw:   List[str] = []
         """
         raw GML data (raw string split on whitespace)
         """
-        self._i = 0
+        self._i: int = 0
         """
         position (index) in self._raw
         """
 
-        self.graph = None
+        self.graph: Graph = cast(Graph, None)
 
     def loadGML(self, path: str):
         with open(path) as infile:
             # NOTE: the split will destroy any spaces in string attributes
             self._raw = infile.read().strip().split()
 
-        self._i:    int   = 0
-        self.graph: Graph = Graph()
+        self._i    = 0
+        self.graph = Graph()
 
     def parse(self):
         if len(self._raw) == 0:
@@ -65,21 +77,21 @@ class Parser:
         self._i += 1
 
     def _parseGraph(self):
-        self._parseOpenWithKeyword('graph')
+        self._parseOpenWithKeyword(Parser.GRAPH_TOKEN)
 
         while self._currentToken() != Parser.END_TOKEN:
-            x = self._currentToken()
-            self.logger.info(f'x: {x}')
-            if x == 'node':
+            currentToken = self._currentToken()
+            self.logger.debug(f'currentToken: {currentToken}')
+            if currentToken == Parser.NODE_TOKEN:
                 self._parseNode()
-            elif x == 'edge':
+            elif currentToken == Parser.EDGE_TOKEN:
                 self._parseEdge()
             else:
                 self._parseAttribute(self.graph)
         self._increment()
 
     def _parseNode(self):
-        self._parseOpenWithKeyword('node')
+        self._parseOpenWithKeyword(Parser.NODE_TOKEN)
 
         node = Node()
 
@@ -93,10 +105,10 @@ class Parser:
             except GMLParseException:
                 self.logger.error(f'current: {self._currentToken()}')
                 continue
-        self.logger.info(f'Current index: {self._i}')
+        self.logger.debug(f'Current index: {self._i}')
         self._increment()
 
-        if not hasattr(node, 'id'):
+        if not hasattr(node, Parser.ID_TOKEN):
             raise GMLParseException(f'[pos {self._i}] node has no id')
 
         nid = node.id
@@ -104,14 +116,14 @@ class Parser:
         if not isinstance(nid, int):
             raise GMLParseException(f'[pos {self._i}] node has non-int id: {nid}')
 
-        if nid in self.graph.graph_nodes:
+        if nid in self.graph.graphNodes:
             raise GMLParseException(f'[pos {self._i}] redefinition of node id: {nid}')
 
-        self.logger.info(f'Added Node: {node} with id: {nid}')
-        self.graph.graph_nodes[nid] = node
+        self.logger.debug(f'Added Node: {node} with id: {nid}')
+        self.graph.graphNodes[nid] = node
 
     def _parseEdge(self):
-        self._parseOpenWithKeyword('edge')
+        self._parseOpenWithKeyword(Parser.EDGE_TOKEN)
 
         edge: Edge = Edge()
 
@@ -123,9 +135,9 @@ class Parser:
                 self._parseAttribute(edge)
         self._increment()
 
-        if not hasattr(edge, 'source'):
+        if not hasattr(edge, Parser.SOURCE_ID_TOKEN):
             raise GMLParseException(f'[pos {self._i}] edge has no source')
-        if not hasattr(edge, 'target'):
+        if not hasattr(edge, Parser.TARGET_ID_TOKEN):
             raise GMLParseException(f'[pos {self._i}] edge has no target')
 
         if not isinstance(edge.source, int):
@@ -134,19 +146,19 @@ class Parser:
             raise GMLParseException(f'[pos {self._i}] edge has non-int target: {edge.target}')
 
         for nid in (edge.source, edge.target):
-            if nid not in self.graph.graph_nodes:
+            if nid not in self.graph.graphNodes:
                 node: Node = Node()
                 node.is_anon = True
                 node.id = nid
-                self.graph.graph_nodes[nid] = node
+                self.graph.graphNodes[nid] = node
 
-        edge.source_node = self.graph.graph_nodes[edge.source]
-        edge.target_node = self.graph.graph_nodes[edge.target]
+        edge.source_node = self.graph.graphNodes[edge.source]
+        edge.target_node = self.graph.graphNodes[edge.target]
 
         edge.source_node.forward_edges.append(edge)
         edge.target_node.backward_edges.append(edge)
 
-        self.graph.graph_edges.append(edge)
+        self.graph.graphEdges.append(edge)
 
     def _parseNodeGraphics(self, node: Node):
 
@@ -157,7 +169,7 @@ class Parser:
             self._parseAttribute(graphics)
 
         self._increment()
-        self.logger.info(f'Current index: {self._i}')
+        self.logger.debug(f'Current index: {self._i}')
         node.graphics = graphics
 
     def _parseEdgeGraphics(self, edge: Edge) -> Edge:
@@ -187,7 +199,7 @@ class Parser:
         lineList: List[Point] = []
         while self._currentToken() != Parser.END_TOKEN:
             current: str = self._currentToken()
-            self.logger.info(f'current: {current}')
+            self.logger.debug(f'current: {current}')
 
             lineList = self._parsePointDefinition(lineList)
 
@@ -203,7 +215,7 @@ class Parser:
 
         point: Point = Point()
         while self._currentToken() != Parser.END_TOKEN:
-            self.logger.info(f'current: {self._currentToken()}')
+            self.logger.debug(f'point current: {self._currentToken()}')
             point = self._parseAttribute(point)
 
         lineList.append(point)
@@ -240,11 +252,11 @@ class Parser:
                 setattr(obj, name, val)
             except ValueError:
                 # otherwise try to parse val as string
-                if not val.startswith('"'):
+                if not val.startswith(f'{Parser.QUOTE_TOKEN}'):
                     raise GMLParseException(f'[pos {self._i}] attribute name is not alphanumeric: {name}')
 
                 val_l = []
-                while not self._currentToken().endswith('"'):
+                while not self._currentToken().endswith(f'{Parser.QUOTE_TOKEN}'):
                     val_l.append(self._currentToken())
                     self._increment()
                 val_l.append(self._currentToken())  # capture closing one
@@ -252,7 +264,7 @@ class Parser:
                 self._increment()
 
                 val = ' '.join(val_l)  # unify
-                val = val.strip('"')
+                val = val.strip(f'{Parser.QUOTE_TOKEN}')
                 setattr(obj, name, val)
 
         return obj
@@ -263,5 +275,5 @@ class Parser:
         self._increment()
 
         if self._currentToken() != Parser.START_TOKEN:
-            raise GMLParseException(f'[pos {self._i}] expected opening [, found: {self._currentToken()}')
+            raise GMLParseException(f'[pos {self._i}] expected opening `[`, found: {self._currentToken()}')
         self._increment()

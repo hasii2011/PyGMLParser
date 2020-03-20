@@ -2,4 +2,5 @@
 /venv-Python-3.7.3/
 build/
 dist/
-/venv-3.7.3/
+__pycache__/
+
