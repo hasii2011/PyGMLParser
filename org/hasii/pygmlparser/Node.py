@@ -1,7 +1,7 @@
 
 from typing import cast
 
-from org.hasii.gmlparser.graphics.NodeGraphics import NodeGraphics
+from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 
 class Node:

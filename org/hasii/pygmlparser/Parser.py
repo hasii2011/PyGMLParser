@@ -1,14 +1,4 @@
-#
-#
-#       https://github.com/icasdri/gml.py
-# Update to Python 3
-#   f-strings
-#   Separate files for each class
-#   Updated GML format from Tulip .gml files to include 'graphics' keyword
-#   Use dataclasses for graphics and points
-#   Use packages instead of single file
-#
-#
+
 from typing import List
 from typing import NewType
 from typing import Tuple
@@ -17,13 +7,13 @@ from typing import Union
 from logging import Logger
 from logging import getLogger
 
-from org.hasii.gmlparser.Edge import Edge
-from org.hasii.gmlparser.Graph import Graph
-from org.hasii.gmlparser.Node import Node
-from org.hasii.gmlparser.exceptions.GMLParseException import GMLParseException
-from org.hasii.gmlparser.graphics.Point import Point
-from org.hasii.gmlparser.graphics.EdgeGraphics import EdgeGraphics
-from org.hasii.gmlparser.graphics.NodeGraphics import NodeGraphics
+from org.hasii.pygmlparser.Edge import Edge
+from org.hasii.pygmlparser.Graph import Graph
+from org.hasii.pygmlparser.Node import Node
+from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+from org.hasii.pygmlparser.graphics.Point import Point
+from org.hasii.pygmlparser.graphics.EdgeGraphics import EdgeGraphics
+from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 
 class Parser:
