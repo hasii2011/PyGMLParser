@@ -1,5 +1,6 @@
 
-from org.hasii.gmlparser.exceptions.GMLException import GMLException
+
+from org.hasii.pygmlparser.exceptions.GMLException import GMLException
 
 
 class GMLParseException(GMLException):
