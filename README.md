@@ -8,7 +8,7 @@ Get it from PyPi by doing:
 `pip3 install PyGMLParser`
 
 
-Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continiious integration.  
+Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continuous integration.  
 
 ----------
 
