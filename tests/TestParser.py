@@ -15,7 +15,7 @@ from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 from tests.TestBase import TestBase
 
 from org.hasii.pygmlparser.Parser import Parser
-from org.hasii.pygmlparser.Parser import Graph
+from org.hasii.pygmlparser.Graph import Graph
 
 
 EXPECTED_NODE_COUNT: int = 5

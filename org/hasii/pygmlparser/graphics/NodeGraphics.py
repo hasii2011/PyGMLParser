@@ -8,14 +8,37 @@ from org.hasii.pygmlparser.graphics.BaseGraphics import BaseGraphics
 class NodeGraphics(BaseGraphics):
 
     x: int = 0
+    """
+    x-coordinate
+    """
     y: int = 0
+    """
+    y-coordinate
+    """
     z: int = 0
+    """
+    z-coordinate for 3-D graphics
+    """
     h: float = 0.0
+    """
+    height
+    """
     w: float = 0.0
+    """
+    width
+    """
     d: float = 0.0
-
+    """
+    depth for 3-D graphics
+    """
     fill:    str = "#ff0000"
+    """
+    RGB value to fill graphic
+    """
     outline: str = "#000000"
+    """
+    RGB value to outline the graphic
+    """
 
     def __str__(self):
         meStr: str = (

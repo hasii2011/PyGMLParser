@@ -2,7 +2,6 @@
 from typing import cast
 
 from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
-
 from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 
