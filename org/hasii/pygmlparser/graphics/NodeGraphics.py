@@ -20,7 +20,7 @@ class NodeGraphics(BaseGraphics):
     def __str__(self):
         meStr: str = (
             f'['
-            f'NodeGraphics: {self.x:>6} y: {self.y:>7} z: {self.z:>3} '
+            f'NodeGraphics: x: {self.x:>4} y: {self.y:>4} z: {self.z:>2} '
             f'h:{self.h:>4} w: {self.w:>4} d: {self.d:>2} '
             f'fill: {self.fill} outline: {self.outline}'
             f']'

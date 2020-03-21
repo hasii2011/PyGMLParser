@@ -17,15 +17,20 @@ class Node:
         self.backward_edges = []  # edges where this node is target
 
     def validate(self, rawIdx: int):
+        """
+        Tests for the mandatory attribute id from GML
+
+        Args:
+            rawIdx: Index into the source input
+
+        Raises
+            `GMLParseException` if mandatory properties are not valid
+        """
 
         if not isinstance(self.id, int):
             raise GMLParseException(f'[pos {rawIdx}] node has non-int id: {self.id}')
 
     def __str__(self):
-        # return 'node [\n{}\n]'.format('\n'.join(
-        #     map(lambda x: '  {} {}'.format(x, repr(getattr(self, x)).replace("'", '"')),
-        #         filter(lambda x: x in ('is_anon',) or '_' not in x, dir(self)))))
-
         meStr: str = f'Node[id: {self.id} anonymous: {self.is_anon}] {self.graphics.__str__()}'
         return meStr
 

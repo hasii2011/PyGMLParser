@@ -112,7 +112,7 @@ class Parser:
         nid = node.id
         self.graph.validate(rawIdx=self._i, nodeId=nid)
 
-        self.logger.info(f'Added Node: {node}')
+        self.logger.info(f'Parsed Node: {node}')
         self.graph.graphNodes[nid] = node
 
     def _parseEdge(self):
@@ -127,16 +127,7 @@ class Parser:
             else:
                 self._parseAttribute(edge)
         self._increment()
-
-        if not hasattr(edge, Parser.SOURCE_ID_TOKEN):
-            raise GMLParseException(f'[pos {self._i}] edge has no source')
-        if not hasattr(edge, Parser.TARGET_ID_TOKEN):
-            raise GMLParseException(f'[pos {self._i}] edge has no target')
-
-        if not isinstance(edge.source, int):
-            raise GMLParseException(f'[pos {self._i}] edge has non-int source: {edge.source}')
-        if not isinstance(edge.target, int):
-            raise GMLParseException(f'[pos {self._i}] edge has non-int target: {edge.target}')
+        edge.validate(rawIdx=self._i)
 
         for nid in (edge.source, edge.target):
             if nid not in self.graph.graphNodes:
@@ -151,6 +142,7 @@ class Parser:
         edge.source_node.forward_edges.append(edge)
         edge.target_node.backward_edges.append(edge)
 
+        self.logger.info(f'Parsed Edge: {edge}')
         self.graph.graphEdges.append(edge)
 
     def _parseNodeGraphics(self, node: Node):

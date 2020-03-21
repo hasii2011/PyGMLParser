@@ -12,3 +12,6 @@ class EdgeGraphics(BaseGraphics):
 
     arrow: str = ''
     line:  Tuple[Point] = ()
+
+    def __str__(self) -> str:
+        return f'EdgeGraphics[{self.__repr__()}] {super().__str__()}'
