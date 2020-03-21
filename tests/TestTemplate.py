@@ -2,41 +2,39 @@
 from logging import Logger
 from logging import getLogger
 
-from unittest import TestSuite
-from unittest import main as unitTestMain
+from pytest import fixture
+# from pytest import raises     # in case you need it
 
 from tests.TestBase import TestBase
 
 # import the class you want to test here
 
+"""
+You need to change the name of this class to Test`xxxx`
+Where `xxxx' is the name of the class that you want to test.
 
-class TestTemplate(TestBase):
-    """
-    You need to change the name of this class to Test`xxxx`
-    Where `xxxx' is the name of the class that you want to test.
-
-    See existing tests for more information.
-    """
-    clsLogger: Logger = None
-
-    @classmethod
-    def setUpClass(cls):
-        TestBase.setUpLogging()
-        TestTemplate.clsLogger = getLogger(__name__)
-
-    def setUp(self):
-        self.logger: Logger = TestTemplate.clsLogger
-
-    def tearDown(self):
-        pass
-
-    def testName1(self):
-        pass
-
-    def testName2(self):
-        """Another test"""
-        pass
+See existing tests for more information.
+"""
 
 
-if __name__ == '__main__':
-    unitTestMain()
+@fixture(name='moduleLogger')
+def setUpClass():
+    TestBase.setUpLogging()
+    moduleLogger: Logger = getLogger(__name__)
+
+    return moduleLogger
+
+
+@fixture(name='MAKE UP A NAME')
+def setUp():
+    # Setup test data
+    pass
+
+
+def testName1(moduleLogger):
+    moduleLogger.info(f'I am test 1')
+
+
+def testName2(moduleLogger):
+    moduleLogger.info(f'I am test 1')
+

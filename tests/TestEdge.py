@@ -2,61 +2,59 @@
 from logging import Logger
 from logging import getLogger
 
-from unittest import TestSuite
-from unittest import expectedFailure
-from unittest import main as unitTestMain
+from pytest import fixture
+from pytest import raises
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
 from tests.TestBase import TestBase
 
 from org.hasii.pygmlparser.Edge import Edge
+from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
 
 
-class TestEdge(TestBase):
-    """
-    """
-    clsLogger: Logger = None
+@fixture(name='moduleLogger')
+def setUpModule():
+    TestBase.setUpLogging()
+    moduleLogger: Logger = getLogger(__name__)
 
-    @classmethod
-    def setUpClass(cls):
-        TestBase.setUpLogging()
-        TestEdge.clsLogger = getLogger(__name__)
-
-    def setUp(self):
-        self.logger: Logger = TestEdge.clsLogger
-        self.edge:   Edge   = Edge()
-
-    def tearDown(self):
-        pass
-
-    def testPerfection(self):
-
-        try:
-            self.edge.source = 1
-            self.edge.target = 2
-        except GMLParseException as e:
-            self.fail(f'Should not get an exception: {e}')
-
-    @expectedFailure
-    def testNoSource(self):
-        self.edge.validate(22)
-
-    @expectedFailure
-    def testNoTarget(self):
-        self.edge.source = 1
-        self.edge.validate(22)
-
-    @expectedFailure
-    def testNonIntSource(self):
-        self.edge.source = ''
-        self.edge.validate(22)
-
-    @expectedFailure
-    def testNonIntTarget(self):
-        self.edge.source = 1
-        self.edge.target = ''
-        self.edge.validate(22)
+    return moduleLogger
 
 
-if __name__ == '__main__':
-    unitTestMain()
+@fixture(name='edge')
+def setUp():
+
+    edge: Edge = Edge()
+
+    return edge
+
+
+def testPerfection(edge):
+
+    try:
+        edge.source = 1
+        edge.target = 2
+    except GMLParseException as e:
+        assert False, f'Should not get an exception: {e}'
+
+
+def testNoSource(edge):
+    with raises(expected_exception=GMLParseException):
+        edge.validate(22)
+
+
+def testNoTarget(edge):
+    edge.source = 1
+    with raises(expected_exception=GMLParseException):
+        edge.validate(22)
+
+
+def testNonIntSource(edge):
+    edge.source = ''
+    with raises(expected_exception=GMLParseException):
+        edge.validate(22)
+
+
+def testNonIntTarget(edge):
+    edge.source = 1
+    edge.target = ''
+    with raises(expected_exception=GMLParseException):
+        edge.validate(22)

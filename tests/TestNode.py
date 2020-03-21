@@ -2,50 +2,46 @@
 from logging import Logger
 from logging import getLogger
 
-from unittest import TestSuite
-from unittest import expectedFailure
-from unittest import main as unitTestMain
+from pytest import fixture
+from pytest import raises
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
 from tests.TestBase import TestBase
 
 from org.hasii.pygmlparser.Node import Node
+from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
 
 
-class TestNode(TestBase):
+@fixture(name='moduleLogger')
+def setUpClass():
+    TestBase.setUpLogging()
+    moduleLogger: Logger = getLogger(__name__)
 
-    clsLogger: Logger = None
-
-    @classmethod
-    def setUpClass(cls):
-        TestBase.setUpLogging()
-        TestNode.clsLogger = getLogger(__name__)
-
-    def setUp(self):
-        self.logger: Logger = TestNode.clsLogger
-        self.node:   Node   = Node()
-
-    def tearDown(self):
-        pass
-
-    @expectedFailure
-    def testOnlyInitialized(self):
-        self.node.validate(22)
-
-    @expectedFailure
-    def testBadId(self):
-
-        self.node.id = 'bogus'
-        self.node.validate(22)
-
-    def testGoodId(self):
-
-        try:
-            self.node.id = 27
-            self.node.validate(22)
-        except GMLParseException as e:
-            self.fail(f'Should not get an exception: {e}')
+    return moduleLogger
 
 
-if __name__ == '__main__':
-    unitTestMain()
+@fixture(name='node')
+def setUp():
+
+    node: Node   = Node()
+    return node
+
+
+def testOnlyInitialized(node):
+    with raises(expected_exception=GMLParseException):
+        node.validate(22)
+
+
+def testBadId(node):
+
+    node.id = 'bogus'
+    with raises(expected_exception=GMLParseException):
+        node.validate(22)
+
+
+def testGoodId(node):
+
+    try:
+        node.id = 27
+        node.validate(22)
+    except GMLParseException as e:
+        assert False, f'Should not get an exception: {e}'

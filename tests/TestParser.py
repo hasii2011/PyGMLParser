@@ -2,12 +2,11 @@
 from logging import Logger
 from logging import getLogger
 
-from unittest import TestSuite
-from unittest import main as unitTestMain
-
 from os import sep as osSep
 from os import path as osPath
 from os import chdir as osChdir
+
+from pytest import fixture
 
 from org.hasii.pygmlparser.Edge import Edge
 from org.hasii.pygmlparser.Node import Node
@@ -19,97 +18,80 @@ from org.hasii.pygmlparser.Parser import Parser
 from org.hasii.pygmlparser.Parser import Graph
 
 
-class TestParser(TestBase):
+EXPECTED_NODE_COUNT: int = 5
+EXPECTED_EDGE_COUNT: int = 4
 
-    EXPECTED_NODE_COUNT: int = 5
-    EXPECTED_EDGE_COUNT: int = 4
+EXPECTED_EDGE_0_SOURCE_ID: int = 0
+EXPECTED_EDGE_0_TARGET_ID: int = 1
 
-    EXPECTED_EDGE_0_SOURCE_ID: int = 0
-    EXPECTED_EDGE_0_TARGET_ID: int = 1
+NODE_2_ID: int = 2
 
-    NODE_2_ID: int = 2
+EXPECTED_NODE_2_X: int = -150
+EXPECTED_NODE_2_Y: int = -527
 
-    EXPECTED_NODE_2_X: int = -150
-    EXPECTED_NODE_2_Y: int = -527
+TEST_FILES_DIR:            str = 'testfiles'
+MONOLITHIC_TEST_FILE_NAME: str = 'hasiiGraph.gml'
 
-    TEST_FILES_DIR:            str = 'testfiles'
-    MONOLITHIC_TEST_FILE_NAME: str = 'hasiiGraph.gml'
+RELATIVE_TEST_FILE_DIR: str = f'{TEST_FILES_DIR}{osSep}{MONOLITHIC_TEST_FILE_NAME}'
 
-    RELATIVE_TEST_FILE_DIR: str = f'{TEST_FILES_DIR}{osSep}{MONOLITHIC_TEST_FILE_NAME}'
+
+@fixture(name='moduleLogger')
+def setUpLogging():
+    TestBase.setUpLogging()
+    moduleLogger: Logger = getLogger(__name__)
+
+    return moduleLogger
+
+
+@fixture(name='parser')
+def setUp():
+    parser: Parser = Parser()
+    return parser
+
+
+@fixture(name='monolithTestFilePath')
+def _findMonolithicTestFile() -> str:
+
+    upDir = f'tests{osSep}{RELATIVE_TEST_FILE_DIR}'
+    if osPath.isfile(upDir):
+        return upDir
+
+    if osPath.isfile(RELATIVE_TEST_FILE_DIR):
+        return RELATIVE_TEST_FILE_DIR
+    else:
+        osChdir("../")
+        return _findMonolithicTestFile()
+
+
+def testMonolithic(parser, monolithTestFilePath, moduleLogger):
     """
+    Not really a good test since it parses an entire file and then inspects sub-aspects.  However,
+    as I find bugs in various protected methods I will fill it in.
     """
-    clsLogger: Logger = None
+    parser.loadGML(monolithTestFilePath)
+    parser.parse()
 
-    @classmethod
-    def setUpClass(cls):
-        TestBase.setUpLogging()
-        TestParser.clsLogger = getLogger(__name__)
+    graph: Graph = parser.graph
 
-    def setUp(self):
-        self.logger: Logger = TestParser.clsLogger
-        self.parser: Parser = Parser()
+    actualNodeCount: int = len(graph.graphNodes)
+    assert EXPECTED_NODE_COUNT == actualNodeCount, 'Mismatch on parsed nodes'
 
-        self._monolithTestFilePath: str = self._findMonolithicTestFile()
+    actualEdgeCount: int = len(graph.graphEdges)
+    assert EXPECTED_EDGE_COUNT == actualEdgeCount, 'Mismatch on parsed edges'
 
-    @classmethod
-    def _findMonolithicTestFile(cls) -> str:
-        upDir = f'tests{osSep}{TestParser.RELATIVE_TEST_FILE_DIR}'
-        if osPath.isfile(upDir):
-            return upDir
+    edge0: Edge = graph.graphEdges[0]
+    actualEdge0SourceId: int = edge0.source
+    actualEdge0TargetId: int = edge0.target
 
-        if osPath.isfile(TestParser.RELATIVE_TEST_FILE_DIR):
-            return TestParser.RELATIVE_TEST_FILE_DIR
-        else:
-            osChdir("../")
-            return cls.findLoggingConfig()
+    assert EXPECTED_EDGE_0_SOURCE_ID == actualEdge0SourceId, 'Source structure might have changed'
+    assert EXPECTED_EDGE_0_TARGET_ID == actualEdge0TargetId, 'Target structure might have changed'
 
-    def tearDown(self):
-        pass
+    node2:         Node         = graph.graphNodes[NODE_2_ID]
+    node2Graphics: NodeGraphics = node2.graphics
+    actualX: int = node2Graphics.x
+    actualY: int = node2Graphics.y
 
-    def testMonolithic(self):
-        """
-        Not really a good test since it parses an entire file and then inspects sub-aspects.  However,
-        as I find bugs in various protected methods I will fill it in.
-        """
-        self.parser.loadGML(self._findMonolithicTestFile())
-        self.parser.parse()
+    assert EXPECTED_NODE_2_X == actualX, 'X position not correctly parsed'
+    assert EXPECTED_NODE_2_Y == actualY, 'Y position not correctly parsed'
 
-        graph: Graph = self.parser.graph
-
-        actualNodeCount: int = len(graph.graphNodes)
-        self.assertEqual(TestParser.EXPECTED_NODE_COUNT, actualNodeCount, 'Mismatch on parsed nodes')
-
-        actualEdgeCount: int = len(graph.graphEdges)
-        self.assertEqual(TestParser.EXPECTED_EDGE_COUNT, actualEdgeCount, 'Mismatch on parsed edges')
-
-        edge0: Edge = graph.graphEdges[0]
-        actualEdge0SourceId: int = edge0.source
-        actualEdge0TargetId: int = edge0.target
-
-        self.assertEqual(TestParser.EXPECTED_EDGE_0_SOURCE_ID, actualEdge0SourceId, 'Source structure might have changed')
-        self.assertEqual(TestParser.EXPECTED_EDGE_0_TARGET_ID, actualEdge0TargetId, 'Target structure might have changed')
-
-        node2:         Node         = graph.graphNodes[TestParser.NODE_2_ID]
-        node2Graphics: NodeGraphics = node2.graphics
-        actualX: int = node2Graphics.x
-        actualY: int = node2Graphics.y
-
-        self.assertEqual(TestParser.EXPECTED_NODE_2_X, actualX, 'X position not correctly parsed')
-        self.assertEqual(TestParser.EXPECTED_NODE_2_Y, actualY, 'Y position not correctly parsed')
-
-        self.logger.debug(f'graph: {graph}')
-
-
-def suite() -> TestSuite:
-    """You need to change the name of the test class here also."""
-    import unittest
-
-    testSuite: TestSuite = TestSuite()
-    # noinspection PyUnresolvedReferences
-    testSuite.addTest(unittest.makeSuite(TestParser))
-
-    return testSuite
-
-
-if __name__ == '__main__':
-    unitTestMain()
+    moduleLogger.debug(f'graph: {graph}')

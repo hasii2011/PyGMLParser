@@ -4,12 +4,10 @@ import json
 import logging
 import logging.config
 
-from unittest import TestCase
-
 JSON_LOGGING_CONFIG_FILENAME = "testLoggingConfig.json"
 
 
-class TestBase(TestCase):
+class TestBase():
     """
     A base unit test class to initialize some logging stuff we need
     """

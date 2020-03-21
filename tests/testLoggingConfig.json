@@ -24,7 +24,7 @@
             ],
             "propagate": "False"
         },
-        "TestGMLParser": {
+        "tests.TestParser": {
             "level": "INFO",
             "handlers": [
                 "consoleHandler"
