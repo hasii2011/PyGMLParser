@@ -2,6 +2,16 @@
 
 It is a fork of: [icasdri/gml.py](https://github.com/icasdri/gml.py)
 
+----------
+Get it from PyPi by doing:
+
+`pip3 install PyGMLParser`
+
+
+Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continiious integration.  
+
+----------
+
 The specific updates are:
 
 * Updated to Python 3
@@ -18,9 +28,6 @@ The specific updates are:
 * Use Python logging for debugging
 * Introduced a set of small unit tests
 
-
-
-Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continiious integration.  
 
 ### The fast and the dirty
 ```python3
