@@ -18,6 +18,10 @@ The specific updates are:
 * Use Python logging for debugging
 * Introduced a set of small unit tests
 
+
+
+Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continiious integration.  
+
 ### The fast and the dirty
 ```python3
 from org.hasii.pygmlparser.Parser import Parser
