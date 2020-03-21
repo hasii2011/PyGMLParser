@@ -37,4 +37,3 @@ def testName1(moduleLogger):
 
 def testName2(moduleLogger):
     moduleLogger.info(f'I am test 1')
-
