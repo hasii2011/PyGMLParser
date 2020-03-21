@@ -54,6 +54,13 @@ class Parser:
         self.graph: Graph = cast(Graph, None)
 
     def loadGML(self, path: str):
+        """
+        First method to call after instantiating a Graph object
+
+        Args:
+            path: The fully qualified path to the .gml file
+
+        """
         with open(path) as infile:
             # NOTE: the split will destroy any spaces in string attributes
             self._raw = infile.read().strip().split()
@@ -62,8 +69,13 @@ class Parser:
         self.graph = Graph()
 
     def parse(self):
+        """
+        The second method to call after the parser loads the .gml file.  After this
+        method completes extract the graph from `org.hasii.pygmlparser.Graph`
+
+        """
         if len(self._raw) == 0:
-            raise GMLParseException('not loaded you must call load_gml before parse')
+            raise GMLParseException('Mot loaded you must call load_gml before parse')
 
         self._parseGraph()
 

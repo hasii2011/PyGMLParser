@@ -7,14 +7,31 @@ from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 
 class Node:
+    """
+    Represents a GML node
+    """
     def __init__(self):
-        # must have attribute id from GML
-        self.graphics: NodeGraphics = NodeGraphics()
 
         self.id: int = cast(int, None)
+        """
+        The unique Node ID
+        """
         self.is_anon = False
-        self.forward_edges  = []  # edges where this node is source
-        self.backward_edges = []  # edges where this node is target
+        """
+        If `True` the node is anonymous
+        """
+        self.forward_edges  = []
+        """
+        edges where this node is the source
+        """
+        self.backward_edges = []
+        """
+        edges where this node is the target
+        """
+        self.graphics: NodeGraphics = NodeGraphics()
+        """
+        The Tulip <i>graphics</i> extension attributes
+        """
 
     def validate(self, rawIdx: int):
         """

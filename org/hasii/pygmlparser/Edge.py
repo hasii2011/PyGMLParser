@@ -9,14 +9,34 @@ class Edge:
     def __init__(self):
 
         self.id:     int = cast(int, None)
+        """
+        The unique edge id
+        """
         self.source: int = cast(int, None)
+        """
+        The source node id for this edge
+        """
         self.target: int = cast(int, None)
+        """
+        The target node id for this edge
+        """
 
         self.label: int = cast(int, None)
+        """
+        Optional label for this edge
+        """
         self.source_node = None
+        """
+        The actual source node
+        """
         self.target_node = None
-
+        """
+        The actual target node
+        """
         self.graphics: EdgeGraphics = cast(EdgeGraphics, None)
+        """
+        The Tulip <i>graphics</i> extension attributes
+        """
 
     def validate(self, rawIdx: int):
         """
