@@ -119,7 +119,7 @@ class Parser:
         if nid in self.graph.graphNodes:
             raise GMLParseException(f'[pos {self._i}] redefinition of node id: {nid}')
 
-        self.logger.debug(f'Added Node: {node} with id: {nid}')
+        self.logger.info(f'Added Node: {node}')
         self.graph.graphNodes[nid] = node
 
     def _parseEdge(self):

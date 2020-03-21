@@ -16,3 +16,16 @@ class NodeGraphics(BaseGraphics):
 
     fill:    str = "#ff0000"
     outline: str = "#000000"
+
+    def __str__(self):
+        meStr: str = (
+            f'['
+            f'NodeGraphics: {self.x:>6} y: {self.y:>7} z: {self.z:>3} '
+            f'h:{self.h:>4} w: {self.w:>4} d: {self.d:>2} '
+            f'fill: {self.fill} outline: {self.outline}'
+            f']'
+        )
+        return f'{super().__str__()} {meStr}'
+
+    def __repr__(self):
+        return self.__str__()

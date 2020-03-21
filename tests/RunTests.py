@@ -4,6 +4,7 @@ from unittest import TestSuite
 from unittest import TestLoader
 
 from tests.TestParser import TestParser
+from tests.TestNode import TestNode
 
 
 def main():
@@ -12,6 +13,7 @@ def main():
     suite: TestSuite = unittest.TestSuite()
 
     suite.addTest(testLoader.loadTestsFromTestCase(TestParser))
+    suite.addTest(testLoader.loadTestsFromTestCase(TestNode))
 
     # initialize a runner, pass it our suite and run it
     runner = unittest.TextTestRunner()
