@@ -108,16 +108,9 @@ class Parser:
         self.logger.debug(f'Current index: {self._i}')
         self._increment()
 
-        if not hasattr(node, Parser.ID_TOKEN):
-            raise GMLParseException(f'[pos {self._i}] node has no id')
-
+        node.validate(rawIdx=self._i)
         nid = node.id
-
-        if not isinstance(nid, int):
-            raise GMLParseException(f'[pos {self._i}] node has non-int id: {nid}')
-
-        if nid in self.graph.graphNodes:
-            raise GMLParseException(f'[pos {self._i}] redefinition of node id: {nid}')
+        self.graph.validate(rawIdx=self._i, nodeId=nid)
 
         self.logger.info(f'Added Node: {node}')
         self.graph.graphNodes[nid] = node

@@ -7,6 +7,8 @@ from typing import NewType
 from org.hasii.pygmlparser.Edge import Edge
 from org.hasii.pygmlparser.Node import Node
 
+from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+
 
 class Graph:
 
@@ -22,6 +24,10 @@ class Graph:
         """
         List of Edges
         """
+    def validate(self, rawIdx: int, nodeId: int):
+
+        if nodeId in self.graphNodes:
+            raise GMLParseException(f'[pos {rawIdx}] redefinition of node id: {nodeId}')
 
     def __repr__(self):
         retStr: str = ''
