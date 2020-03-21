@@ -47,16 +47,5 @@ class TestNode(TestBase):
             self.fail(f'Should not get an exception: {e}')
 
 
-def suite() -> TestSuite:
-    """You need to change the name of the test class here also."""
-    import unittest
-
-    testSuite: TestSuite = TestSuite()
-    # noinspection PyUnresolvedReferences
-    testSuite.addTest(unittest.makeSuite(TestNode))
-
-    return testSuite
-
-
 if __name__ == '__main__':
     unitTestMain()

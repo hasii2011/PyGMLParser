@@ -43,16 +43,5 @@ class TestGraph(TestBase):
         self.graph.validate(rawIdx=22, nodeId=TestGraph.FAIL_NODE_ID)
 
 
-def suite() -> TestSuite:
-    """You need to change the name of the test class here also."""
-    import unittest
-
-    testSuite: TestSuite = TestSuite()
-    # noinspection PyUnresolvedReferences
-    testSuite.addTest(unittest.makeSuite(TestGraph))
-
-    return testSuite
-
-
 if __name__ == '__main__':
     unitTestMain()
