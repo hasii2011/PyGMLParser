@@ -29,8 +29,6 @@ class TestBase(TestCase):
     @classmethod
     def findLoggingConfig(cls) -> str:
         """"""
-        from os import getcwd
-
         upDir = f'tests/{JSON_LOGGING_CONFIG_FILENAME}'
         if os.path.isfile(upDir):
             return upDir
