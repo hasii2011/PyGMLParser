@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>org.hasii.pygmlparser.Parser API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>org.hasii.pygmlparser.Parser</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import cast
+from typing import List
+from typing import NewType
+from typing import Tuple
+from typing import Union
+
+from logging import Logger
+from logging import getLogger
+
+from org.hasii.pygmlparser.Edge import Edge
+from org.hasii.pygmlparser.Graph import Graph
+from org.hasii.pygmlparser.Node import Node
+from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+from org.hasii.pygmlparser.graphics.Point import Point
+from org.hasii.pygmlparser.graphics.EdgeGraphics import EdgeGraphics
+from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
+
+
+class Parser:
+
+    AttrObjectType = NewType(&#39;AttrObjectType&#39;, Union[Node, Edge, NodeGraphics, EdgeGraphics, Point])
+    LineType       = NewType(&#39;LineType&#39;, Tuple[Point, ...])
+
+    GRAPH_TOKEN: str = &#39;graph&#39;
+
+    ID_TOKEN:   str = &#39;id&#39;
+    NODE_TOKEN: str = &#39;node&#39;
+    EDGE_TOKEN: str = &#39;edge&#39;
+
+    SOURCE_ID_TOKEN: str = &#39;source&#39;
+    TARGET_ID_TOKEN: str = &#39;target&#39;
+
+    GRAPHICS_TOKEN: str = &#39;graphics&#39;
+    START_TOKEN:    str = &#39;[&#39;
+    END_TOKEN:      str = &#39;]&#39;
+
+    QUOTE_TOKEN: str = &#39;&#34;&#39;
+
+    LINE_DEFINITION_TOKEN:  str = &#39;Line&#39;
+    POINT_DEFINITION_TOKEN: str = &#39;point&#39;
+
+    def __init__(self):
+        self.logger: Logger    = getLogger(__name__)
+        self._raw:   List[str] = []
+        &#34;&#34;&#34;
+        raw GML data (raw string split on whitespace)
+        &#34;&#34;&#34;
+        self._i: int = 0
+        &#34;&#34;&#34;
+        position (index) in self._raw
+        &#34;&#34;&#34;
+
+        self.graph: Graph = cast(Graph, None)
+
+    def loadGML(self, path: str):
+        &#34;&#34;&#34;
+        First method to call after instantiating a Graph object
+
+        Args:
+            path: The fully qualified path to the .gml file
+
+        &#34;&#34;&#34;
+        with open(path) as infile:
+            # NOTE: the split will destroy any spaces in string attributes
+            self._raw = infile.read().strip().split()
+
+        self._i    = 0
+        self.graph = Graph()
+
+    def parse(self):
+        &#34;&#34;&#34;
+        The second method to call after the parser loads the .gml file.  After this
+        method completes extract the graph from `org.hasii.pygmlparser.Graph`
+
+        &#34;&#34;&#34;
+        if len(self._raw) == 0:
+            raise GMLParseException(&#39;Mot loaded you must call load_gml before parse&#39;)
+
+        self._parseGraph()
+
+    def _currentToken(self) -&gt; str:
+        if self._i &gt;= len(self._raw):
+            raise GMLParseException(f&#39;[pos {self._i}] unexpected end of file&#39;)
+
+        return self._raw[self._i]
+
+    def _increment(self):
+        self._i += 1
+
+    def _parseGraph(self):
+        self._parseOpenWithKeyword(Parser.GRAPH_TOKEN)
+
+        while self._currentToken() != Parser.END_TOKEN:
+            currentToken = self._currentToken()
+            self.logger.debug(f&#39;currentToken: {currentToken}&#39;)
+            if currentToken == Parser.NODE_TOKEN:
+                self._parseNode()
+            elif currentToken == Parser.EDGE_TOKEN:
+                self._parseEdge()
+            else:
+                self._parseAttribute(self.graph)
+        self._increment()
+
+    def _parseNode(self):
+        self._parseOpenWithKeyword(Parser.NODE_TOKEN)
+
+        node = Node()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            try:
+                current: str = self._currentToken()
+                if current == Parser.GRAPHICS_TOKEN:
+                    self._parseNodeGraphics(node)
+                else:
+                    self._parseAttribute(node)
+            except GMLParseException:
+                self.logger.error(f&#39;current: {self._currentToken()}&#39;)
+                continue
+        self.logger.debug(f&#39;Current index: {self._i}&#39;)
+        self._increment()
+
+        node.validate(rawIdx=self._i)
+        nid = node.id
+        self.graph.validate(rawIdx=self._i, nodeId=nid)
+
+        self.logger.info(f&#39;Parsed Node: {node}&#39;)
+        self.graph.graphNodes[nid] = node
+
+    def _parseEdge(self):
+        self._parseOpenWithKeyword(Parser.EDGE_TOKEN)
+
+        edge: Edge = Edge()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            current: str = self._currentToken()
+            if current == Parser.GRAPHICS_TOKEN:
+                self._parseEdgeGraphics(edge)
+            else:
+                self._parseAttribute(edge)
+        self._increment()
+        edge.validate(rawIdx=self._i)
+
+        for nid in (edge.source, edge.target):
+            if nid not in self.graph.graphNodes:
+                node: Node = Node()
+                node.is_anon = True
+                node.id = nid
+                self.graph.graphNodes[nid] = node
+
+        edge.source_node = self.graph.graphNodes[edge.source]
+        edge.target_node = self.graph.graphNodes[edge.target]
+
+        edge.source_node.forward_edges.append(edge)
+        edge.target_node.backward_edges.append(edge)
+
+        self.logger.info(f&#39;Parsed Edge: {edge}&#39;)
+        self.graph.graphEdges.append(edge)
+
+    def _parseNodeGraphics(self, node: Node):
+
+        self._parseOpenWithKeyword(Parser.GRAPHICS_TOKEN)
+        graphics: NodeGraphics = NodeGraphics()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            self._parseAttribute(graphics)
+
+        self._increment()
+        self.logger.debug(f&#39;Current index: {self._i}&#39;)
+        node.graphics = graphics
+
+    def _parseEdgeGraphics(self, edge: Edge) -&gt; Edge:
+
+        self._parseOpenWithKeyword(Parser.GRAPHICS_TOKEN)
+        graphics: EdgeGraphics = EdgeGraphics()
+        while self._currentToken() != Parser.END_TOKEN:
+
+            current: str = self._currentToken()
+            if current == Parser.LINE_DEFINITION_TOKEN:
+                graphics = self._parseLineDefinition(graphics)
+            else:
+                graphics = self._parseAttribute(graphics)
+
+        self._increment()
+        edge.graphics = graphics
+
+        return edge
+
+    def _parseLineDefinition(self, graphics: EdgeGraphics) -&gt; EdgeGraphics:
+
+        self._parseOpenWithKeyword(Parser.LINE_DEFINITION_TOKEN)
+
+        #
+        # We&#39;ll use a List because of the vagaries of Python data classes
+        #
+        lineList: List[Point] = []
+        while self._currentToken() != Parser.END_TOKEN:
+            current: str = self._currentToken()
+            self.logger.debug(f&#39;current: {current}&#39;)
+
+            lineList = self._parsePointDefinition(lineList)
+
+        # But the data classes save a line definition as a Tuple of points
+        graphics.line = tuple(lineList)
+
+        self._increment()
+        return graphics
+
+    def _parsePointDefinition(self, lineList: List[Point]) -&gt; List[Point]:
+
+        self._parseOpenWithKeyword(Parser.POINT_DEFINITION_TOKEN)
+
+        point: Point = Point()
+        while self._currentToken() != Parser.END_TOKEN:
+            self.logger.debug(f&#39;point current: {self._currentToken()}&#39;)
+            point = self._parseAttribute(point)
+
+        lineList.append(point)
+
+        self._increment()
+        return lineList
+
+    def _parseAttribute(self, obj: AttrObjectType) -&gt; AttrObjectType:
+        &#34;&#34;&#34;
+
+        Args:
+            obj: The object we update attributes on
+
+
+        Returns:
+            The update object
+        &#34;&#34;&#34;
+        name = self._currentToken()
+        if not name.isalnum():
+            raise GMLParseException(f&#39;[pos {self._i}] attribute name is not alphanumeric: {name}&#39;)
+        self._increment()
+
+        val = self._currentToken()
+        try:
+            # try to parse val as int
+            val = int(val, 10)
+            self._increment()
+            setattr(obj, name, val)
+        except ValueError:
+            # Try float
+            try:
+                val = float(val)
+                self._increment()
+                setattr(obj, name, val)
+            except ValueError:
+                # otherwise try to parse val as string
+                if not val.startswith(f&#39;{Parser.QUOTE_TOKEN}&#39;):
+                    raise GMLParseException(f&#39;[pos {self._i}] attribute name is not alphanumeric: {name}&#39;)
+
+                val_l = []
+                while not self._currentToken().endswith(f&#39;{Parser.QUOTE_TOKEN}&#39;):
+                    val_l.append(self._currentToken())
+                    self._increment()
+                val_l.append(self._currentToken())  # capture closing one
+
+                self._increment()
+
+                val = &#39; &#39;.join(val_l)  # unify
+                val = val.strip(f&#39;{Parser.QUOTE_TOKEN}&#39;)
+                setattr(obj, name, val)
+
+        return obj
+
+    def _parseOpenWithKeyword(self, kw: str):
+        if self._currentToken() != kw:
+            raise GMLParseException(f&#39;[pos {self._i}] expected `{kw}` keyword, found: {self._currentToken()}&#39;)
+        self._increment()
+
+        if self._currentToken() != Parser.START_TOKEN:
+            raise GMLParseException(f&#39;[pos {self._i}] expected opening `[`, found: {self._currentToken()}&#39;)
+        self._increment()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="org.hasii.pygmlparser.Parser.Parser"><code class="flex name class">
+<span>class <span class="ident">Parser</span></span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Parser:
+
+    AttrObjectType = NewType(&#39;AttrObjectType&#39;, Union[Node, Edge, NodeGraphics, EdgeGraphics, Point])
+    LineType       = NewType(&#39;LineType&#39;, Tuple[Point, ...])
+
+    GRAPH_TOKEN: str = &#39;graph&#39;
+
+    ID_TOKEN:   str = &#39;id&#39;
+    NODE_TOKEN: str = &#39;node&#39;
+    EDGE_TOKEN: str = &#39;edge&#39;
+
+    SOURCE_ID_TOKEN: str = &#39;source&#39;
+    TARGET_ID_TOKEN: str = &#39;target&#39;
+
+    GRAPHICS_TOKEN: str = &#39;graphics&#39;
+    START_TOKEN:    str = &#39;[&#39;
+    END_TOKEN:      str = &#39;]&#39;
+
+    QUOTE_TOKEN: str = &#39;&#34;&#39;
+
+    LINE_DEFINITION_TOKEN:  str = &#39;Line&#39;
+    POINT_DEFINITION_TOKEN: str = &#39;point&#39;
+
+    def __init__(self):
+        self.logger: Logger    = getLogger(__name__)
+        self._raw:   List[str] = []
+        &#34;&#34;&#34;
+        raw GML data (raw string split on whitespace)
+        &#34;&#34;&#34;
+        self._i: int = 0
+        &#34;&#34;&#34;
+        position (index) in self._raw
+        &#34;&#34;&#34;
+
+        self.graph: Graph = cast(Graph, None)
+
+    def loadGML(self, path: str):
+        &#34;&#34;&#34;
+        First method to call after instantiating a Graph object
+
+        Args:
+            path: The fully qualified path to the .gml file
+
+        &#34;&#34;&#34;
+        with open(path) as infile:
+            # NOTE: the split will destroy any spaces in string attributes
+            self._raw = infile.read().strip().split()
+
+        self._i    = 0
+        self.graph = Graph()
+
+    def parse(self):
+        &#34;&#34;&#34;
+        The second method to call after the parser loads the .gml file.  After this
+        method completes extract the graph from `org.hasii.pygmlparser.Graph`
+
+        &#34;&#34;&#34;
+        if len(self._raw) == 0:
+            raise GMLParseException(&#39;Mot loaded you must call load_gml before parse&#39;)
+
+        self._parseGraph()
+
+    def _currentToken(self) -&gt; str:
+        if self._i &gt;= len(self._raw):
+            raise GMLParseException(f&#39;[pos {self._i}] unexpected end of file&#39;)
+
+        return self._raw[self._i]
+
+    def _increment(self):
+        self._i += 1
+
+    def _parseGraph(self):
+        self._parseOpenWithKeyword(Parser.GRAPH_TOKEN)
+
+        while self._currentToken() != Parser.END_TOKEN:
+            currentToken = self._currentToken()
+            self.logger.debug(f&#39;currentToken: {currentToken}&#39;)
+            if currentToken == Parser.NODE_TOKEN:
+                self._parseNode()
+            elif currentToken == Parser.EDGE_TOKEN:
+                self._parseEdge()
+            else:
+                self._parseAttribute(self.graph)
+        self._increment()
+
+    def _parseNode(self):
+        self._parseOpenWithKeyword(Parser.NODE_TOKEN)
+
+        node = Node()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            try:
+                current: str = self._currentToken()
+                if current == Parser.GRAPHICS_TOKEN:
+                    self._parseNodeGraphics(node)
+                else:
+                    self._parseAttribute(node)
+            except GMLParseException:
+                self.logger.error(f&#39;current: {self._currentToken()}&#39;)
+                continue
+        self.logger.debug(f&#39;Current index: {self._i}&#39;)
+        self._increment()
+
+        node.validate(rawIdx=self._i)
+        nid = node.id
+        self.graph.validate(rawIdx=self._i, nodeId=nid)
+
+        self.logger.info(f&#39;Parsed Node: {node}&#39;)
+        self.graph.graphNodes[nid] = node
+
+    def _parseEdge(self):
+        self._parseOpenWithKeyword(Parser.EDGE_TOKEN)
+
+        edge: Edge = Edge()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            current: str = self._currentToken()
+            if current == Parser.GRAPHICS_TOKEN:
+                self._parseEdgeGraphics(edge)
+            else:
+                self._parseAttribute(edge)
+        self._increment()
+        edge.validate(rawIdx=self._i)
+
+        for nid in (edge.source, edge.target):
+            if nid not in self.graph.graphNodes:
+                node: Node = Node()
+                node.is_anon = True
+                node.id = nid
+                self.graph.graphNodes[nid] = node
+
+        edge.source_node = self.graph.graphNodes[edge.source]
+        edge.target_node = self.graph.graphNodes[edge.target]
+
+        edge.source_node.forward_edges.append(edge)
+        edge.target_node.backward_edges.append(edge)
+
+        self.logger.info(f&#39;Parsed Edge: {edge}&#39;)
+        self.graph.graphEdges.append(edge)
+
+    def _parseNodeGraphics(self, node: Node):
+
+        self._parseOpenWithKeyword(Parser.GRAPHICS_TOKEN)
+        graphics: NodeGraphics = NodeGraphics()
+
+        while self._currentToken() != Parser.END_TOKEN:
+            self._parseAttribute(graphics)
+
+        self._increment()
+        self.logger.debug(f&#39;Current index: {self._i}&#39;)
+        node.graphics = graphics
+
+    def _parseEdgeGraphics(self, edge: Edge) -&gt; Edge:
+
+        self._parseOpenWithKeyword(Parser.GRAPHICS_TOKEN)
+        graphics: EdgeGraphics = EdgeGraphics()
+        while self._currentToken() != Parser.END_TOKEN:
+
+            current: str = self._currentToken()
+            if current == Parser.LINE_DEFINITION_TOKEN:
+                graphics = self._parseLineDefinition(graphics)
+            else:
+                graphics = self._parseAttribute(graphics)
+
+        self._increment()
+        edge.graphics = graphics
+
+        return edge
+
+    def _parseLineDefinition(self, graphics: EdgeGraphics) -&gt; EdgeGraphics:
+
+        self._parseOpenWithKeyword(Parser.LINE_DEFINITION_TOKEN)
+
+        #
+        # We&#39;ll use a List because of the vagaries of Python data classes
+        #
+        lineList: List[Point] = []
+        while self._currentToken() != Parser.END_TOKEN:
+            current: str = self._currentToken()
+            self.logger.debug(f&#39;current: {current}&#39;)
+
+            lineList = self._parsePointDefinition(lineList)
+
+        # But the data classes save a line definition as a Tuple of points
+        graphics.line = tuple(lineList)
+
+        self._increment()
+        return graphics
+
+    def _parsePointDefinition(self, lineList: List[Point]) -&gt; List[Point]:
+
+        self._parseOpenWithKeyword(Parser.POINT_DEFINITION_TOKEN)
+
+        point: Point = Point()
+        while self._currentToken() != Parser.END_TOKEN:
+            self.logger.debug(f&#39;point current: {self._currentToken()}&#39;)
+            point = self._parseAttribute(point)
+
+        lineList.append(point)
+
+        self._increment()
+        return lineList
+
+    def _parseAttribute(self, obj: AttrObjectType) -&gt; AttrObjectType:
+        &#34;&#34;&#34;
+
+        Args:
+            obj: The object we update attributes on
+
+
+        Returns:
+            The update object
+        &#34;&#34;&#34;
+        name = self._currentToken()
+        if not name.isalnum():
+            raise GMLParseException(f&#39;[pos {self._i}] attribute name is not alphanumeric: {name}&#39;)
+        self._increment()
+
+        val = self._currentToken()
+        try:
+            # try to parse val as int
+            val = int(val, 10)
+            self._increment()
+            setattr(obj, name, val)
+        except ValueError:
+            # Try float
+            try:
+                val = float(val)
+                self._increment()
+                setattr(obj, name, val)
+            except ValueError:
+                # otherwise try to parse val as string
+                if not val.startswith(f&#39;{Parser.QUOTE_TOKEN}&#39;):
+                    raise GMLParseException(f&#39;[pos {self._i}] attribute name is not alphanumeric: {name}&#39;)
+
+                val_l = []
+                while not self._currentToken().endswith(f&#39;{Parser.QUOTE_TOKEN}&#39;):
+                    val_l.append(self._currentToken())
+                    self._increment()
+                val_l.append(self._currentToken())  # capture closing one
+
+                self._increment()
+
+                val = &#39; &#39;.join(val_l)  # unify
+                val = val.strip(f&#39;{Parser.QUOTE_TOKEN}&#39;)
+                setattr(obj, name, val)
+
+        return obj
+
+    def _parseOpenWithKeyword(self, kw: str):
+        if self._currentToken() != kw:
+            raise GMLParseException(f&#39;[pos {self._i}] expected `{kw}` keyword, found: {self._currentToken()}&#39;)
+        self._increment()
+
+        if self._currentToken() != Parser.START_TOKEN:
+            raise GMLParseException(f&#39;[pos {self._i}] expected opening `[`, found: {self._currentToken()}&#39;)
+        self._increment()</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="org.hasii.pygmlparser.Parser.Parser.EDGE_TOKEN"><code class="name">var <span class="ident">EDGE_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.END_TOKEN"><code class="name">var <span class="ident">END_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.GRAPHICS_TOKEN"><code class="name">var <span class="ident">GRAPHICS_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.GRAPH_TOKEN"><code class="name">var <span class="ident">GRAPH_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.ID_TOKEN"><code class="name">var <span class="ident">ID_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.LINE_DEFINITION_TOKEN"><code class="name">var <span class="ident">LINE_DEFINITION_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.NODE_TOKEN"><code class="name">var <span class="ident">NODE_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.POINT_DEFINITION_TOKEN"><code class="name">var <span class="ident">POINT_DEFINITION_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.QUOTE_TOKEN"><code class="name">var <span class="ident">QUOTE_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.SOURCE_ID_TOKEN"><code class="name">var <span class="ident">SOURCE_ID_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.START_TOKEN"><code class="name">var <span class="ident">START_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.TARGET_ID_TOKEN"><code class="name">var <span class="ident">TARGET_ID_TOKEN</span></code></dt>
+<dd>
+<section class="desc"></section>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="org.hasii.pygmlparser.Parser.Parser.AttrObjectType"><code class="name flex">
+<span>def <span class="ident">AttrObjectType</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def new_type(x):
+    return x</code></pre>
+</details>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.LineType"><code class="name flex">
+<span>def <span class="ident">LineType</span></span>(<span>x)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def new_type(x):
+    return x</code></pre>
+</details>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.loadGML"><code class="name flex">
+<span>def <span class="ident">loadGML</span></span>(<span>self, path)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>First method to call after instantiating a Graph object</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong></dt>
+<dd>The fully qualified path to the .gml file</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loadGML(self, path: str):
+    &#34;&#34;&#34;
+    First method to call after instantiating a Graph object
+
+    Args:
+        path: The fully qualified path to the .gml file
+
+    &#34;&#34;&#34;
+    with open(path) as infile:
+        # NOTE: the split will destroy any spaces in string attributes
+        self._raw = infile.read().strip().split()
+
+    self._i    = 0
+    self.graph = Graph()</code></pre>
+</details>
+</dd>
+<dt id="org.hasii.pygmlparser.Parser.Parser.parse"><code class="name flex">
+<span>def <span class="ident">parse</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>The second method to call after the parser loads the .gml file.
+After this
+method completes extract the graph from <a title="org.hasii.pygmlparser.Graph" href="Graph.html"><code>org.hasii.pygmlparser.Graph</code></a></p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse(self):
+    &#34;&#34;&#34;
+    The second method to call after the parser loads the .gml file.  After this
+    method completes extract the graph from `org.hasii.pygmlparser.Graph`
+
+    &#34;&#34;&#34;
+    if len(self._raw) == 0:
+        raise GMLParseException(&#39;Mot loaded you must call load_gml before parse&#39;)
+
+    self._parseGraph()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="org.hasii.pygmlparser" href="index.html">org.hasii.pygmlparser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="org.hasii.pygmlparser.Parser.Parser" href="#org.hasii.pygmlparser.Parser.Parser">Parser</a></code></h4>
+<ul class="">
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.AttrObjectType" href="#org.hasii.pygmlparser.Parser.Parser.AttrObjectType">AttrObjectType</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.EDGE_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.EDGE_TOKEN">EDGE_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.END_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.END_TOKEN">END_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.GRAPHICS_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.GRAPHICS_TOKEN">GRAPHICS_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.GRAPH_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.GRAPH_TOKEN">GRAPH_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.ID_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.ID_TOKEN">ID_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.LINE_DEFINITION_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.LINE_DEFINITION_TOKEN">LINE_DEFINITION_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.LineType" href="#org.hasii.pygmlparser.Parser.Parser.LineType">LineType</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.NODE_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.NODE_TOKEN">NODE_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.POINT_DEFINITION_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.POINT_DEFINITION_TOKEN">POINT_DEFINITION_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.QUOTE_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.QUOTE_TOKEN">QUOTE_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.SOURCE_ID_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.SOURCE_ID_TOKEN">SOURCE_ID_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.START_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.START_TOKEN">START_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.TARGET_ID_TOKEN" href="#org.hasii.pygmlparser.Parser.Parser.TARGET_ID_TOKEN">TARGET_ID_TOKEN</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.loadGML" href="#org.hasii.pygmlparser.Parser.Parser.loadGML">loadGML</a></code></li>
+<li><code><a title="org.hasii.pygmlparser.Parser.Parser.parse" href="#org.hasii.pygmlparser.Parser.Parser.parse">parse</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
