@@ -10,6 +10,7 @@ Get it from PyPi by doing:
 
 Uses [Travis CI](https://travis-ci.org/github/hasii2011/PyGMLParser) for continuous  integration.  
 
+The class documentation is [here](https://hasii2011.github.io/PyGMLParser/)
 ----------
 
 The specific updates are:
