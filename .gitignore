@@ -3,6 +3,6 @@
 /build/
 /dist/
 __pycache__/
-/PyGMLParser.egg-info/
+/pygmlparser.egg-info/
 .DS_Store
 /html/
