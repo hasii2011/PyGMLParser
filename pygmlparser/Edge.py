@@ -1,8 +1,8 @@
 
 from typing import cast
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
-from org.hasii.pygmlparser.graphics.EdgeGraphics import EdgeGraphics
+from pygmlparser.exceptions.GMLParseException import GMLParseException
+from pygmlparser.graphics.EdgeGraphics import EdgeGraphics
 
 
 class Edge:

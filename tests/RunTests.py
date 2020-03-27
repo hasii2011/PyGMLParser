@@ -3,8 +3,8 @@ import unittest
 from unittest import TestSuite
 from unittest import TestLoader
 
-from tests.TestParser import TestParser
-from tests.TestNode import TestNode
+from tests import TestParser
+from tests import TestNode
 
 
 def main():

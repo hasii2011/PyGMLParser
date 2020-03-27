@@ -7,8 +7,8 @@ from pytest import raises
 
 from tests.TestBase import TestBase
 
-from org.hasii.pygmlparser.Edge import Edge
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+from pygmlparser.Edge import Edge
+from pygmlparser.exceptions.GMLParseException import GMLParseException
 
 
 @fixture(name='moduleLogger')

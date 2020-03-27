@@ -8,14 +8,14 @@ from os import chdir as osChdir
 
 from pytest import fixture
 
-from org.hasii.pygmlparser.Edge import Edge
-from org.hasii.pygmlparser.Node import Node
-from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
-
 from tests.TestBase import TestBase
 
-from org.hasii.pygmlparser.Parser import Parser
-from org.hasii.pygmlparser.Graph import Graph
+from pygmlparser.graphics.NodeGraphics import NodeGraphics
+
+from pygmlparser.Edge import Edge
+from pygmlparser.Node import Node
+from pygmlparser.Parser import Parser
+from pygmlparser.Graph import Graph
 
 
 EXPECTED_NODE_COUNT: int = 5

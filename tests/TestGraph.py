@@ -5,12 +5,12 @@ from logging import getLogger
 from pytest import fixture
 from pytest import raises
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+from pygmlparser.exceptions.GMLParseException import GMLParseException
 from tests.TestBase import TestBase
 
-from org.hasii.pygmlparser.Node import Node
+from pygmlparser.Node import Node
 
-from org.hasii.pygmlparser.Graph import Graph
+from pygmlparser.Graph import Graph
 
 
 FAIL_NODE_ID: int = 1

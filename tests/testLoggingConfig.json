@@ -31,7 +31,7 @@
             ],
             "propagate": "False"
         },
-        "org.hasii.pygmlparser.Parser": {
+        "pygmlparser.Parser": {
             "level":     "INFO",
             "handlers": [
                 "consoleHandler"

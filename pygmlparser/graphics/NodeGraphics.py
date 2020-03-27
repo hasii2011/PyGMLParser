@@ -1,7 +1,7 @@
 
 from dataclasses import dataclass
 
-from org.hasii.pygmlparser.graphics.BaseGraphics import BaseGraphics
+from pygmlparser.graphics.BaseGraphics import BaseGraphics
 
 
 @dataclass

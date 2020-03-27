@@ -4,10 +4,10 @@ from typing import Dict
 from typing import List
 from typing import NewType
 
-from org.hasii.pygmlparser.Edge import Edge
-from org.hasii.pygmlparser.Node import Node
+from pygmlparser.Edge import Edge
+from pygmlparser.Node import Node
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
+from pygmlparser.exceptions.GMLParseException import GMLParseException
 
 
 class Graph:

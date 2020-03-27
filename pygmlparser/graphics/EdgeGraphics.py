@@ -3,8 +3,8 @@ from typing import Tuple
 
 from dataclasses import dataclass
 
-from org.hasii.pygmlparser.graphics.Point import Point
-from org.hasii.pygmlparser.graphics.BaseGraphics import BaseGraphics
+from pygmlparser.graphics.Point import Point
+from pygmlparser.graphics.BaseGraphics import BaseGraphics
 
 
 @dataclass

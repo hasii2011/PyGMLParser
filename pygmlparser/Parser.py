@@ -8,13 +8,15 @@ from typing import Union
 from logging import Logger
 from logging import getLogger
 
-from org.hasii.pygmlparser.Edge import Edge
-from org.hasii.pygmlparser.Graph import Graph
-from org.hasii.pygmlparser.Node import Node
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
-from org.hasii.pygmlparser.graphics.Point import Point
-from org.hasii.pygmlparser.graphics.EdgeGraphics import EdgeGraphics
-from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
+from pygmlparser.Edge import Edge
+from pygmlparser.Graph import Graph
+from pygmlparser.Node import Node
+
+from pygmlparser.graphics.Point import Point
+from pygmlparser.graphics.EdgeGraphics import EdgeGraphics
+from pygmlparser.graphics.NodeGraphics import NodeGraphics
+
+from pygmlparser.exceptions.GMLParseException import GMLParseException
 
 
 class Parser:

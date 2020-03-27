@@ -1,8 +1,8 @@
 
 from typing import cast
 
-from org.hasii.pygmlparser.exceptions.GMLParseException import GMLParseException
-from org.hasii.pygmlparser.graphics.NodeGraphics import NodeGraphics
+from pygmlparser.exceptions.GMLParseException import GMLParseException
+from pygmlparser.graphics.NodeGraphics import NodeGraphics
 
 
 class Node:
