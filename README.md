@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hasii2011/PyGMLParser.svg?branch=master)](https://travis-ci.org/hasii2011/PyGMLParser)
+
 `PyGMLParser` is a [Graph Modeling Language (GML)](https://en.wikipedia.org/wiki/Graph_Modelling_Language) standalone parser for Python 3.
 
 It is a fork of: [icasdri/gml.py](https://github.com/icasdri/gml.py)
