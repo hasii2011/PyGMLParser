@@ -1,8 +1,10 @@
 .idea/
-/venv-pyenv-3.8.2/
+/pyenv-3.9.9/
 /build/
 /dist/
 __pycache__/
 /pygmlparser.egg-info/
 .DS_Store
 /html/
+.envrc
+.python-version

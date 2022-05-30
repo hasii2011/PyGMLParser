@@ -1,14 +1,19 @@
 
-# os: osx
+notifications:
+  email:
+    recipients:
+      - humberto.a.sanchez.ii@gmail.com
+    on_success: change # default: change
+    on_failure: always # default: always
 
-# osx_image: xcode11.2
+dist: bionic
 
 language: python
 
 cache: pip
 
 python:
-  - "3.7"
+  - "3.9.12"
 
 # command to install dependencies
 install:

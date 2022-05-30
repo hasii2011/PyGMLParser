@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="pygmlparser",
-    version="1.0.0",
+    version="1.0.1",
     description="Graph Modeling Language (GML) standalone parser for Python 3.",
     long_description=README,
     long_description_content_type="text/markdown",
